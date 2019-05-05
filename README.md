@@ -3,7 +3,7 @@ Copy number calling and growth rate calculation for prokaryote.
 
 # Requirments
 R version >= 2.6
-R package 'quantreg'
+and R package 'quantreg'
 
 # Set up
 python setup.py
