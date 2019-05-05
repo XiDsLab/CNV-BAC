@@ -1,0 +1,113 @@
+#!/bin/bash
+######################################################################
+####   CNVproto: Call copy number variations for prokaryote
+####   Aurthor: Linjie Wu
+####   Date: 201904018
+######################################################################
+
+#### Set paths
+SoftwareDir="/data1/XiLab/ljwu/ProkaBIC-seq-1.0"
+Samtools="${SoftwareDir}/src/samtools-0.1.7a_getUnique-0.1.3/samtools"
+BICNorm="${SoftwareDir}/src/BICseq2-norm_v0.2.6/BICseq2-norm.pl"
+BICSeg="${SoftwareDir}/src/BICseq2-seg_v0.7.3/BICseq2-seg.pl"
+GenerateConf="${SoftwareDir}/src/GenerateConf.py"
+OriCorrect="${SoftwareDir}/src/OricCorrection.R"
+
+#### Usage
+usage(){
+    echo -e "Program: CNVproto (Call copy number variations for prokaryote.)"
+    echo -e "Usage: CNVproto [options]"
+    echo -e "      -h  display help info."
+    echo -e "      -i  bam file generate by BWA. (required)"
+    echo -e "      -o  prefix of output file (Default CNVproto_tmp)."
+    echo -e "      -s  Location of origin of replications seperated by comma (required), one can get this information"
+    echo -e "          from DoriC database http://tubic.org/doric/public/index.php/index."
+    echo -e "      -r  fasta file of reference file. (required)"
+    echo -e "      -m  Mode for CNVproto either Norm or NormAndSeg (Default Norm)"
+    echo -e "      -l  penalty for BIC-seq2 (required if choose mode NormAndSeg)"
+    echo -e "      -b  length of bin. (Defaut 100)"
+    echo -e "      -d  the tmp directory. (Default $(pwd)/tmp)"
+    echo -e "example: CNVproto -i Input.bam -l 1800000 -s 150,150000"
+exit 1
+}
+## No parameters
+if [ $# == 0 ]
+then
+usage
+fi
+
+## Initialize variables to default values
+OUT="CNVproto_tmp"
+tmp_dir="${SoftwareDir}/tmp"
+BIN="100"
+REF=""
+ORloc=""
+BAMINPUT=""
+LAMBDA=""
+MODE="Norm"
+
+### Check the parameters
+while getopts :i:o:s:r:d:b:m:l:h FLAG; do
+  case $FLAG in
+    i)  
+      BAMINPUT=$OPTARG
+      ;;
+    o) 
+      OUT=$OPTARG
+      ;;
+    s)  
+      ORloc=$OPTARG
+      ;;
+    r)  
+      REF=$OPTARG  
+      ;;
+    d)  
+      tmp_dir=$OPTARG
+      ;;
+    b)
+      BIN=$OPTARG
+      ;;
+    m)
+      MODE=$OPTARG
+      ;;
+    l)
+      LAMBDA=$OPTARG
+      ;;
+    h)  
+      usage
+      ;;
+    \?) 
+      usage
+      ;;
+  esac
+done
+shift $((OPTIND-1))  #This tells getopts to move on to the next argument.
+echo -e "CNVproto -i ${BAMINPUT} -o ${OUT} -m ${MODE} -s ${ORloc} -r ${REF} -l ${LAMBDA} -b ${BIN} -d ${tmp_dir}"
+
+if [ ! -x "$tmp_out" ]; then
+mkdir -p ${tmp_dir}
+fi
+
+###### Norm
+## Extract unique mapping reads
+${Samtools} view -U BWA,${tmp_dir}/chr,N,N ${BAMINPUT}
+mv ${tmp_dir}/chr*.seq ${tmp_dir}/${OUT}.seq
+
+## Generate config files
+python ${GenerateConf} ${REF} ${tmp_dir} ${OUT}
+
+## Bininig and normalization
+${BICNorm} -p 0.5 -b ${BIN} ${tmp_dir}/conf_1 ${tmp_dir}/${OUT}_norm.out
+
+## Remove the influence of  replication origin
+Rscript ${OriCorrect} ${tmp_dir}/${OUT}.norm.bin ${ORloc} ${tmp_dir} ${OUT}
+
+
+##### Segements
+if [ ${MODE} == 'NormAndSeg' ]; then
+${BICSeg} --lambda ${LAMBDA} ${tmp_dir}/conf_2 ${tmp_dir}/${OUT}_seg.out
+fi
+
+rm ${tmp_dir}/chr*
+rm ${tmp_dir}/conf*
+rm ${tmp_dir}/*.seq
