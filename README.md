@@ -19,3 +19,7 @@ ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_re
 
 ## Example for detection of copy number varations
 ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_region -m CNV -l 8
+
+# Output files
+*_Reproduction.txt: Growth rate measured by spearman correlation, pearson correlation and coefficient of quantile regression.
+*_seg.out: Segmentation result for CNV calling. Since prokaryote are haplotype, we recomand 
