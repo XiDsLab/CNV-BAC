@@ -11,7 +11,7 @@ oriC = as.numeric(strsplit(Args[7],',')[[1]])
 Dir = Args[8]
 OUT = Args[9]
 setwd(Dir)
-outfile = paste0(file,'.OriCorrected')
+outfile = file
 outfile2 = paste0(OUT,'_GR.txt')
 
 ### load
