@@ -10,6 +10,7 @@ and R package 'quantreg'
 
 # Set up
 python setup.py
+
 Then add the path of ProkaBIC-seq to envrionment.
 
 # Usage
