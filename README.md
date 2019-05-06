@@ -22,4 +22,7 @@ ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_re
 
 # Output files
 *_Reproduction.txt: Growth rate measured by spearman correlation, pearson correlation and coefficient of quantile regression.
-*_seg.out: Segmentation result for CNV calling. Since prokaryote are haplotype, we recomand 
+*_seg.out: Segmentation result for CNV calling. Since prokaryote are haplotype, we recomand use 0.5 and -0.5 as the thresholds for CNV gain and loss.
+*_norm： Record the parameters for normalization.
+*.norm.bin: Normalized and GC corrected counts.
+*.norm.bin.OriCorrected: Normalized, GC corrected and oriC corrected counts.
