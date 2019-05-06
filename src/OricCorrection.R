@@ -12,7 +12,7 @@ Dir = Args[8]
 OUT = Args[9]
 setwd(Dir)
 outfile = paste0(file,'.OriCorrected')
-outfile2 = paste0(OUT,'_Reproduction.txt')
+outfile2 = paste0(OUT,'_GR.txt')
 
 ### load
 norm.bin = read.table(file,header = T)
