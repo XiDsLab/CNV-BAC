@@ -1,6 +1,9 @@
 # ProkaBIC-seq
 Copy number calling and growth rate calculation for prokaryote.
 
+# Download
+git https://github.com/LinjieWu/ProkaBIC-seq.git
+
 # Requirments
 R version >= 2.6
 and R package 'quantreg'
