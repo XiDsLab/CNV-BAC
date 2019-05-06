@@ -28,6 +28,4 @@ ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_re
 
 *_norm.out： Record the parameters for normalization.
 
-*.norm.bin: Normalized and GC corrected counts.
-
-*.norm.bin.OriCorrected: Normalized, GC corrected and oriC corrected counts.
+*.norm.bin: Normalized, GC corrected and oriC corrected counts.
