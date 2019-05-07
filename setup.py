@@ -12,11 +12,11 @@ while line:
     line = f.readline()
 open('ProkaBIC-seq','w').write(tmp)
 
-CMD = 'tar xf ' + dir +'/src/BICseq2-norm_v0.2.6.tar.gz'
+CMD = 'tar xf ' + dir +'/src/BICseq2-norm_v0.2.6.tar.gz -C ' + dir + '/src/'
 os.system(CMD)
-CMD = 'tar xf ' + dir +'/src/BICseq2-seg_v0.7.3.tar.gz'
+CMD = 'tar xf ' + dir +'/src/BICseq2-seg_v0.7.3.tar.gz -C '+ dir + '/src/'
 os.system(CMD)
-CMD = 'tar xf ' + dir +'/src/samtools-0.1.7a_getUnique-0.1.3.tar.gz'
+CMD = 'tar xf ' + dir +'/src/samtools-0.1.7a_getUnique-0.1.3.tar.gz -C '+ dir + '/src/'
 os.system(CMD)
 CMD = 'rm ' + dir +'/src/*.tar.gz'
 os.system(CMD)
