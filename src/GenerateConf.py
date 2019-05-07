@@ -35,5 +35,5 @@ open(dir+'/conf_1','w').write(conf_1)
 
 # For segmentation
 conf_2 = 'romName\tbinFileNorm\n'
-conf_2 = conf_2 + 'chr\t' + dir +'/' + OUT + '.norm.bin.OriCorrected\n'
+conf_2 = conf_2 + 'chr\t' + dir +'/' + OUT + '.norm.bin\n'
 open(dir+'/conf_2','w').write(conf_2)
