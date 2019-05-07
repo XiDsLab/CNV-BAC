@@ -6,7 +6,7 @@
 ######################################################################
 
 #### Set paths
-SoftwareDir=
+SoftwareDir="/data1/XiLab/ljwu/ProkaBIC-seq-master"
 Samtools="${SoftwareDir}/src/samtools-0.1.7a_getUnique-0.1.3/samtools"
 BICNorm="${SoftwareDir}/src/BICseq2-norm_v0.2.6/BICseq2-norm.pl"
 BICSeg="${SoftwareDir}/src/BICseq2-seg_v0.7.3/BICseq2-seg.pl"
@@ -46,10 +46,10 @@ ORloc=""
 BAMINPUT=""
 LAMBDA=""
 MODE="GR"
-P='0.5'
+PROB='0.5'
 
 ### Check the parameters
-while getopts :i:o:s:r:d:b:m:l:h FLAG; do
+while getopts :i:o:s:r:d:b:m:l:p:h FLAG; do
   case $FLAG in
     i)  
       BAMINPUT=$OPTARG
@@ -76,7 +76,7 @@ while getopts :i:o:s:r:d:b:m:l:h FLAG; do
       LAMBDA=$OPTARG
       ;;
     p)
-      P=$OPTARG
+      PROB=$OPTARG
       ;;
     h)  
       usage
@@ -102,7 +102,7 @@ mv ${tmp_dir}/chr*.seq ${tmp_dir}/${OUT}.seq
 python ${GenerateConf} ${REF} ${tmp_dir} ${OUT}
 
 ## Bininig and normalization
-${BICNorm} -p ${P} -b ${BIN} ${tmp_dir}/conf_1 ${tmp_dir}/${OUT}_norm.out
+${BICNorm} -p ${PROB} -b ${BIN} ${tmp_dir}/conf_1 ${tmp_dir}/${OUT}_norm.out
 
 ## Remove the influence of  replication origin
 Rscript ${OriCorrect} ${tmp_dir}/${OUT}.norm.bin ${ORloc} ${tmp_dir} ${OUT}
