@@ -9,9 +9,11 @@ R version >= 2.6
 and R package 'quantreg'
 
 # Set up
+cd /PATH/TO/ProkaBIC-seq
+
 python setup.py
 
-Then add the path of ProkaBIC-seq to envrionment.
+Add the path of ProkaBIC-seq to envrionment.
 
 # Usage
 ProkaBIC-seq require the origin of replication for reference genome. For the references from NCBI database, origin of replications can get from http://tubic.org/doric/public/index.php/index.
