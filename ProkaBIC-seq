@@ -6,7 +6,7 @@
 ######################################################################
 
 #### Set paths
-SoftwareDir="/data1/XiLab/ljwu/ProkaBIC-seq-1.0"
+SoftwareDir=
 Samtools="${SoftwareDir}/src/samtools-0.1.7a_getUnique-0.1.3/samtools"
 BICNorm="${SoftwareDir}/src/BICseq2-norm_v0.2.6/BICseq2-norm.pl"
 BICSeg="${SoftwareDir}/src/BICseq2-seg_v0.7.3/BICseq2-seg.pl"
@@ -26,6 +26,7 @@ usage(){
     echo -e "      -m  Mode for ProkaBIC-seq either GR or CNV (Default GR)"
     echo -e "      -l  penalty for BIC-seq2 (required if choose mode NormAndSeg)"
     echo -e "      -b  length of bin. (Defaut 1000)"
+    echo -e "      -p  subsample percentage for normalization. (Default 0.5)"
     echo -e "      -d  the tmp directory. (Default ${SoftwareDir}/tmp)"
     echo -e "example: ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_region"
 exit 1
@@ -45,6 +46,7 @@ ORloc=""
 BAMINPUT=""
 LAMBDA=""
 MODE="GR"
+P='0.5'
 
 ### Check the parameters
 while getopts :i:o:s:r:d:b:m:l:h FLAG; do
@@ -73,6 +75,9 @@ while getopts :i:o:s:r:d:b:m:l:h FLAG; do
     l)
       LAMBDA=$OPTARG
       ;;
+    p)
+      P=$OPTARG
+      ;;
     h)  
       usage
       ;;
@@ -97,7 +102,7 @@ mv ${tmp_dir}/chr*.seq ${tmp_dir}/${OUT}.seq
 python ${GenerateConf} ${REF} ${tmp_dir} ${OUT}
 
 ## Bininig and normalization
-${BICNorm} -p 0.5 -b ${BIN} ${tmp_dir}/conf_1 ${tmp_dir}/${OUT}_norm.out
+${BICNorm} -p ${P} -b ${BIN} ${tmp_dir}/conf_1 ${tmp_dir}/${OUT}_norm.out
 
 ## Remove the influence of  replication origin
 Rscript ${OriCorrect} ${tmp_dir}/${OUT}.norm.bin ${ORloc} ${tmp_dir} ${OUT}

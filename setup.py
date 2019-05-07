@@ -12,13 +12,13 @@ while line:
     line = f.readline()
 open('ProkaBIC-seq','w').write(tmp)
 
-CMD = 'chmod 775 ' + dir +'/ProkaBIC-seq'
+CMD = 'tar xf ' + dir +'/src/BICseq2-norm_v0.2.6.tar.gz'
 os.system(CMD)
-CMD = 'chmod 775 ' + dir +'/src/BICseq2-seg_v0.7.3/*.pl'
+CMD = 'tar xf ' + dir +'/src/BICseq2-seg_v0.7.3.tar.gz'
 os.system(CMD)
-CMD = 'chmod 775 ' + dir +'/src/BICseq2-norm_v0.2.6/*.pl'
+CMD = 'tar xf ' + dir +'/src/samtools-0.1.7a_getUnique-0.1.3.tar.gz'
 os.system(CMD)
-CMD = 'chmod 775 ' + dir +'/src/samtools-0.1.7a_getUnique-0.1.3/samtools'
+CMD = 'rm ' + dir +'/src/*.tar.gz'
 os.system(CMD)
 CMD = 'Rscript ' + dir+'/src/CheckRpackages.r'
 os.system(CMD)
