@@ -110,7 +110,7 @@ Rscript ${OriCorrect} ${tmp_dir}/${OUT}.norm.bin ${ORloc} ${tmp_dir} ${OUT}
 
 ##### Segements
 if [ ${MODE} == 'CNV' ]; then
-${BICSeg} --lambda ${LAMBDA} ${tmp_dir}/conf_2 ${tmp_dir}/${OUT}_seg.out
+${BICSeg} --lambda ${LAMBDA} --bootstrap ${tmp_dir}/conf_2 ${tmp_dir}/${OUT}_seg.out
 fi
 
 rm ${tmp_dir}/chr*
