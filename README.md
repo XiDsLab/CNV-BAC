@@ -1,5 +1,5 @@
 # ProkaBIC-seq
-Copy number calling and growth rate calculation for prokaryote.
+Copy number detection and growth rate calculation for prokaryote.
 
 # Download
 git clone https://github.com/LinjieWu/ProkaBIC-seq.git
