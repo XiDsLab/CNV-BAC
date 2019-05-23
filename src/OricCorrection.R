@@ -21,7 +21,8 @@ RefL = max(norm.bin$end)+1
 x = c()
 for(c in oriC){
    x = cbind(x,abs(BinLocation-c))
-   x = cbind(x,abs(RefL - BinLocation + c))
+   x = cbind(x,RefL - BinLocation + c)
+   x = cbind(x,RefL - c + BinLocation)
 }
 x = apply(x,1,min)
 y = log2((norm.bin$obs+0.01)/norm.bin$expected)
