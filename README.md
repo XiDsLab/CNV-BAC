@@ -6,7 +6,7 @@ git clone https://github.com/LinjieWu/ProkaBIC-seq.git
 
 # Requirments
 R version >= 2.6
-and R package 'quantreg'
+and R package 'mgcv'
 
 # Set up
 cd /PATH/TO/ProkaBIC-seq
