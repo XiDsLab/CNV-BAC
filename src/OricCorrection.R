@@ -2,16 +2,16 @@
 #####       Remove the effects of distance to oriC
 ##### Input 1: norm.bin file
 ##### Input 2: start of oriC Regions (Seperated by comma)
-##### Linjie Wu 2019.3.26
+##### Linjie Wu 2019.6.21
 ###########################################################
-require(quantreg)
+require('mgcv')
 Args = commandArgs()
 file = Args[6]
 oriC = as.numeric(strsplit(Args[7],',')[[1]])
 Dir = Args[8]
 OUT = Args[9]
 setwd(Dir)
-outfile = file
+outfile = paste0(file,'_corrected.norm.bin')
 outfile2 = paste0(OUT,'_GR.txt')
 
 ### load
@@ -27,16 +27,22 @@ for(c in oriC){
 x = apply(x,1,min)
 y = log2((norm.bin$obs+0.01)/norm.bin$expected)
 
-## Median regression
-fit = rq(y~scale(x),tau = 0.5)
-expected = 2^(log2(norm.bin$expected) + scale(x)*fit$coefficients[2])
-norm.bin$expected = round(expected,3)
+## GAM
+x = scale(x)
+index = intersect(which(y<quantile(y,0.95)),which(y>quantile(y,0.05)))
+X = x[index]
+Y = y[index]
+fit = gam(Y~s(X))
+X = data.frame(X = x)
+pred = predict(fit,X)
+expected = 2^(log2(norm.bin$expected) + pred)
+norm.bin$expected = round(expected,2)
 write.table(norm.bin,file=outfile,quote=F,row.names=F,sep='\t')
 
 ## Correlation
-r = c(cor(x,y,method='spearman'),cor(x,y,method='pearson'),fit$coefficients[2])
+r = c(cor(x,y,method='spearman'),cor(x,y,method='pearson'))
 r = round(r,3)
-names(r) = c('SpearmanCorrelation','pearsonCorrelation', 'QuantileRegression')
+names(r) = c('SpearmanCorrelation','pearsonCorrelation')
 print(r)
 print(paste0('The length of reference sequences is ',as.character(RefL)))
 write.table(r,file=outfile2,col.names=F,quote=F,sep='\t')

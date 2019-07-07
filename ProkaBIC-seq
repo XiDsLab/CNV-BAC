@@ -6,7 +6,7 @@
 ######################################################################
 
 #### Set paths
-SoftwareDir="/data1/XiLab/ljwu/ProkaBIC-seq-master"
+SoftwareDir="/data1/XiLab/ljwu/ProkaBIC-seq"
 Samtools="${SoftwareDir}/src/samtools-0.1.7a_getUnique-0.1.3/samtools"
 BICNorm="${SoftwareDir}/src/BICseq2-norm_v0.2.6/BICseq2-norm.pl"
 BICSeg="${SoftwareDir}/src/BICseq2-seg_v0.7.3/BICseq2-seg.pl"
@@ -102,7 +102,7 @@ mv ${tmp_dir}/chr*.seq ${tmp_dir}/${OUT}.seq
 python ${GenerateConf} ${REF} ${tmp_dir} ${OUT}
 
 ## Bininig and normalization
-${BICNorm} -p ${PROB} -b ${BIN} ${tmp_dir}/conf_1 ${tmp_dir}/${OUT}_norm.out
+${BICNorm} -p ${PROB} -b ${BIN} --tmp ${tmp_dir}/tmp ${tmp_dir}/conf_1 ${tmp_dir}/${OUT}_norm.out
 
 ## Remove the influence of  replication origin
 Rscript ${OriCorrect} ${tmp_dir}/${OUT}.norm.bin ${ORloc} ${tmp_dir} ${OUT}
@@ -110,7 +110,8 @@ Rscript ${OriCorrect} ${tmp_dir}/${OUT}.norm.bin ${ORloc} ${tmp_dir} ${OUT}
 
 ##### Segements
 if [ ${MODE} == 'CNV' ]; then
-${BICSeg} --lambda ${LAMBDA} --bootstrap ${tmp_dir}/conf_2 ${tmp_dir}/${OUT}_seg.out
+${BICSeg} --lambda ${LAMBDA} --bootstrap --tmp ${tmp_dir}/tmp ${tmp_dir}/conf_2 ${tmp_dir}/${OUT}_RAW_seg.out
+${BICSeg} --lambda ${LAMBDA} --bootstrap --tmp ${tmp_dir}/tmp ${tmp_dir}/conf_3 ${tmp_dir}/${OUT}_Proka_seg.out
 fi
 
 rm ${tmp_dir}/chr*

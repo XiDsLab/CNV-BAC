@@ -1,7 +1,7 @@
 LIST=.packages(all.available=T)
-flag = sum(LIST == 'quantreg')
+flag = sum(LIST == 'mgcv')
 if(flag){
-print('Package quantreg is available.')
+print('Package mgcv is available.')
 }else{
-print('ERROR: Package quantreg is not available.')
+print('ERROR: Package mgcv is not available.')
 }
