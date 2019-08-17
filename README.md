@@ -6,7 +6,7 @@ git clone https://github.com/LinjieWu/ProkaBIC-seq.git
 
 # Requirments
 R version >= 2.6
-and R package 'quantreg'
+and R package 'mgcv'
 
 # Set up
 cd /PATH/TO/ProkaBIC-seq
@@ -21,7 +21,7 @@ ProkaBIC-seq require the origin of replication for reference genome. For the ref
 ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_region
 
 ## Example for detection of copy number varations
-ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_region -m CNV -l 8
+ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_region -m CNV -l 2
 
 # Output files
 *_GR.txt: Growth rate measured by spearman correlation, pearson correlation and coefficient of quantile regression.
