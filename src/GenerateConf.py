@@ -5,6 +5,7 @@ import os,sys
 ref = sys.argv[1]
 dir = sys.argv[2]
 OUT = sys.argv[3]
+Mapfile = sys.argv[4]
 if ref[0] != '/':
     ref = os.getcwd() + '/' + ref
 if dir[-1] == '/':
@@ -20,11 +21,11 @@ while line:
 f.close()
 
 ## Generate Mapfile
-tmp = '0 '+str(c-1)+'\n'
-open(dir+'/chr.txt','w').write(tmp)
+#tmp = '0 '+str(c-1)+'\n'
+#open(dir+'/chr.txt','w').write(tmp)
 
 ## Generate config file
-Mapfile = dir + '/chr.txt'
+#Mapfile = dir + '/chr.txt'
 readPosFile = dir + '/' + OUT +'.seq'
 binFileNorm = dir + '/' + OUT +'.norm.bin' 
 
