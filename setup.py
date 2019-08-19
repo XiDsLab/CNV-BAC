@@ -1,7 +1,8 @@
 import os,sys
 dir = os.getcwd()
-f = open('ProkaBIC-seq')
 
+## Main code
+f = open('ProkaBIC-seq')
 tmp = ''
 line = f.readline()
 while line:
@@ -11,6 +12,18 @@ while line:
         tmp = tmp + line
     line = f.readline()
 open('ProkaBIC-seq','w').write(tmp)
+
+## Main code
+f = open('GenerateMappabilityFile.py')
+tmp = ''
+line = f.readline()
+while line:
+    if line.find('SoftwareDir') == 0:
+        tmp = tmp + 'SoftwareDir="' + dir + '"\n'
+    else:
+        tmp = tmp + line
+    line = f.readline()
+open('GeneratemappabilityFile.py','w').write(tmp)
 
 CMD = 'tar xf ' + dir +'/src/BICseq2-norm_v0.2.6.tar.gz -C ' + dir + '/src/'
 os.system(CMD)
