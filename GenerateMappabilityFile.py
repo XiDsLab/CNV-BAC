@@ -6,12 +6,9 @@ softwaredir='/home/ljwu/software/ProkaBIC-seq'
 gemtools_dir = softwaredir+'/src/gemtools-1.7.1-i3/bin/'
 CMD = 'export PATH='+gemtools_dir+':$PATH'
 os.system(CMD)
-# refFile = sys.argv[1]
-# readLength = sys.argv[2]
-# output = sys.argv[3]
-refFile = '/home/ljwu/ProkaPaper/ref/Ecoil.fasta'
-readLength = '150'
-output = '/home/ljwu/software/test/Ecoil'
+refFile = sys.argv[1]
+readLength = sys.argv[2]
+output = sys.argv[3]
 
 ### Transform reference to 70 length each row
 ## unfold (Circular DNA)
