@@ -23,7 +23,7 @@ while line:
     else:
         tmp = tmp + line
     line = f.readline()
-open('GeneratemappabilityFile.py','w').write(tmp)
+open('GenerateMappabilityFile.py','w').write(tmp)
 
 CMD = 'tar xf ' + dir +'/src/BICseq2-norm_v0.2.6.tar.gz -C ' + dir + '/src/'
 os.system(CMD)
