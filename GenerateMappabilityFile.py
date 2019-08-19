@@ -2,8 +2,8 @@
 ####     Generate mappability file for ProkaBIC-seq    ####
 ###########################################################
 import os,sys
-softwaredir='/home/ljwu/software/ProkaBIC-seq'
-gemtools_dir = softwaredir+'/src/gemtools-1.7.1-i3/bin/'
+SoftwareDir=''
+gemtools_dir = SoftwareDir+'/src/gemtools-1.7.1-i3/bin/'
 CMD = 'export PATH='+gemtools_dir+':$PATH'
 os.system(CMD)
 refFile = sys.argv[1]
