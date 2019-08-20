@@ -25,7 +25,6 @@ while line:
 f.close()
 
 ## reshape
-os.system('rm '+ output + '_mappability.ref')
 f = open(output+'_mappability.ref','a')
 f.write(tag)
 for c in range(0,len(ref),50):
@@ -64,5 +63,5 @@ while line:
 
 f.close()
 open(output+'_mappbaility','w').write(result)
-os.system('rm '+ output +'*.*')
+
 
