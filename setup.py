@@ -14,7 +14,7 @@ while line:
 open('ProkaBIC-seq','w').write(tmp)
 
 ## Main code
-f = open('GenerateMappabilityFile.py')
+f = open('GenerateMappabilityFile.sh')
 tmp = ''
 line = f.readline()
 while line:
@@ -23,7 +23,7 @@ while line:
     else:
         tmp = tmp + line
     line = f.readline()
-open('GenerateMappabilityFile.py','w').write(tmp)
+open('GenerateMappabilityFile.sh','w').write(tmp)
 
 CMD = 'tar xf ' + dir +'/src/BICseq2-norm_v0.2.6.tar.gz -C ' + dir + '/src/'
 os.system(CMD)
@@ -36,3 +36,4 @@ os.system(CMD)
 CMD = 'Rscript ' + dir+'/src/CheckRpackages.r'
 os.system(CMD)
 os.system('chmod 775 ProkaBIC-seq')
+os.system('chmod 775 GenerateMappabilityFile.sh')
