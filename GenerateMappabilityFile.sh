@@ -17,3 +17,10 @@ gem-2-wig -I ${output}.gem -i ${output}.mappability -o ${output}_${readLength}
 ### Generate mappability for ProkaBIC-seq
 python ${SoftwareDir}/src/ProkaBICseqMappability.py ${readLength} ${output}
 
+### remove temporary files
+rm ${output}.gem
+rm ${output}.log
+rm ${output}_mappability.ref
+rm ${output}.mappability
+rm ${output}_${readLength}.sizes
+rm ${output}_${readLength}.wig
