@@ -3,7 +3,7 @@ refFile=$1
 readLength=$2
 output=$3
 
-SoftwareDir="/lustre1/ruibinxi_pkuhpc/ljwu/software/ProkaBIC-seq"
+SoftwareDir=
 export PATH=${SoftwareDir}/src/gemtools-1.7.1-i3/bin/:$PATH
 
 ### Reshape reference
