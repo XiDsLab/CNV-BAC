@@ -23,9 +23,11 @@ ProkaBIC-seq require the origin of replication for reference genome. For the ref
 ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_region -m example_mappability -l 2
 
 # Output files
+*_mappability: Regions of reference with mappability 1 (calculated by gemtools).
+
 *_GR.txt: Growth rate measured by spearman correlation, pearson correlation and coefficient of quantile regression.
 
-*_seg.out: Segmentation result for CNV calling. Since prokaryote are haplotype, we recomand use 0.5 and -0.5 as the thresholds for CNV gain and loss.
+*_seg.out: Segmentation result for CNV calling. Since prokaryote are haplotype, we recomand use 0.2 and -0.2 as the thresholds for CNV gain and loss.
 
 *_norm.out： Record the parameters for normalization.
 
