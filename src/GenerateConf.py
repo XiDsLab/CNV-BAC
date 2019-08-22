@@ -20,10 +20,6 @@ while line:
     line = f.readline()
 f.close()
 
-## Generate Mapfile
-#tmp = '0 '+str(c-1)+'\n'
-#open(dir+'/chr.txt','w').write(tmp)
-
 ## Generate config file
 #Mapfile = dir + '/chr.txt'
 readPosFile = dir + '/' + OUT +'.seq'

@@ -24,4 +24,4 @@ while line:
     line = f.readline()
 f.close()
 
-open(output+'_mappbaility','w').write(result)
+open(output+'_mappability','w').write(result)
