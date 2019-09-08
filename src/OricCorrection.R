@@ -10,10 +10,13 @@ file = Args[6]
 oriC = as.numeric(strsplit(Args[7],',')[[1]])
 Dir = Args[8]
 OUT = Args[9]
+Method = Args[10]
 setwd(Dir)
 outfile = paste0(file,'_corrected.norm.bin')
-outfile2 = paste0(OUT,'_GR.txt')
+outfile2 = paste0(OUT,'_statistics.txt')
 
+##### Guassian correction
+if(Method == 'Guassian'){
 ### load
 norm.bin = read.table(file,header = T)
 BinLocation = ceiling((norm.bin$start+norm.bin$end)/2)
@@ -27,7 +30,7 @@ for(c in oriC){
 x = apply(x,1,min)
 y = log2((norm.bin$obs+0.01)/norm.bin$expected)
 
-## GAM
+## fitting
 x = scale(x)
 index = intersect(which(y<quantile(y,0.95)),which(y>quantile(y,0.05)))
 X = x[index]
@@ -46,3 +49,46 @@ names(r) = c('SpearmanCorrelation','pearsonCorrelation')
 print(r)
 print(paste0('The length of reference sequences is ',as.character(RefL)))
 write.table(r,file=outfile2,col.names=F,quote=F,sep='\t')
+}
+
+##### Poission correcrion
+if(Method == 'Poission'){
+### load
+norm.bin = read.table(file,header = T)
+BinLocation = ceiling((norm.bin$start+norm.bin$end)/2)
+RefL = max(norm.bin$end)+1
+x = c()
+for(c in oriC){
+   x = cbind(x,abs(BinLocation-c))
+   x = cbind(x,RefL - BinLocation + c)
+   x = cbind(x,RefL - c + BinLocation)
+}
+x1 = apply(x,1,min)
+x2 = norm.bin$expected
+y = norm.bin$obs
+
+## fitting
+x = scale(x)
+index = intersect(which(y<quantile(y,0.95)),which(y>quantile(y,0.05)))
+X1 = x1[index]
+X2 = x2[index]
+Y = y[index]
+fit = gam(Y~s(X1)+s(X2))
+X = data.frame(X1 = x1, X2 = x2,family=poisson())
+pred = predict(fit,X)
+expected = exp(pred)
+norm.bin$expected = round(expected,2)
+write.table(norm.bin,file=outfile,quote=F,row.names=F,sep='\t')
+
+## Correlation
+r = c(cor(x,y,method='spearman'),cor(x,y,method='pearson'))
+r = round(r,3)
+names(r) = c('SpearmanCorrelation','pearsonCorrelation')
+print(r)
+print(paste0('The length of reference sequences is ',as.character(RefL)))
+write.table(r,file=outfile2,col.names=F,quote=F,sep='\t')
+}
+
+
+
+

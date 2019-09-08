@@ -17,24 +17,26 @@ OriCorrect="${SoftwareDir}/src/OricCorrection.R"
 usage(){
     echo -e "Program: ProkaBIC-seq (Call copy number variations for prokaryote.)"
     echo -e "Usage: ProkaBIC-seq [options]"
-    echo -e "      -h  display help info."
     echo -e "      -i  bam file generate by BWA. (required)"
-    echo -e "      -o  prefix of output file (Default ProkaBIC-seq_tmp)."
     echo -e "      -s  Location of origin of replications seperated by comma (required), one can get this information"
     echo -e "          from DoriC database http://tubic.org/doric/public/index.php/index."
     echo -e "      -r  fasta file of reference file. (required)"
     echo -e "      -m  Mappability file (required)"
-    echo -e "      -l  penalty for BIC-seq2 (required if choose mode NormAndSeg)"
+    echo -e "      -l  penalty for BIC-seq2 (required)"
+    echo -e "      -o  prefix of output file (Default ProkaBIC-seq_tmp)."
     echo -e "      -b  length of bin. (Defaut 1000)"
+    echo -e "      -norm method for correction of normalization either Guassian or Possion (Default Guassian)"
     echo -e "      -p  subsample percentage for normalization. (Default 0.5)"
     echo -e "      -d  the tmp directory. (Default ${SoftwareDir}/tmp)"
-    echo -e "example: ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_region"
+    echo -e "      -h  display help info."
+    echo -e "example: ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_region -m Mappability -l 4"
 exit 1
 }
 ## No parameters
 if [ $# == 0 ]
 then
 usage
+exit
 fi
 
 ## Initialize variables to default values
@@ -47,9 +49,10 @@ BAMINPUT=""
 LAMBDA=""
 MAPfile=""
 PROB='0.5'
+NORM='Guassian'
 
 ### Check the parameters
-while getopts :i:o:s:r:d:b:m:l:p:h FLAG; do
+while getopts :i:o:s:r:d:b:m:l:norm:p:h FLAG; do
   case $FLAG in
     i)  
       BAMINPUT=$OPTARG
@@ -75,6 +78,9 @@ while getopts :i:o:s:r:d:b:m:l:p:h FLAG; do
     l)
       LAMBDA=$OPTARG
       ;;
+    norm)
+      NORM=$OPTARG
+      ;;
     p)
       PROB=$OPTARG
       ;;
@@ -88,6 +94,13 @@ while getopts :i:o:s:r:d:b:m:l:p:h FLAG; do
 done
 shift $((OPTIND-1))  #This tells getopts to move on to the next argument.
 echo -e "ProkaBIC-seq -i ${BAMINPUT} -o ${OUT} -m ${MAPfile} -s ${ORloc} -r ${REF} -l ${LAMBDA} -b ${BIN} -d ${tmp_dir}"
+
+## wrong parmater
+if [ "Guassian" -o 'Poisson' -ne '$NORM' ]
+usage
+echo -e "Wrong parmater -norm" 
+exit
+fi
 
 if [ ! -x "$tmp_out" ]; then
 mkdir -p ${tmp_dir}
@@ -105,7 +118,7 @@ python ${GenerateConf} ${REF} ${tmp_dir} ${OUT} ${MAPfile}
 ${BICNorm} -p ${PROB} -b ${BIN} --tmp ${tmp_dir}/tmp ${tmp_dir}/conf_1 ${tmp_dir}/${OUT}_norm.out
 
 ## Remove the influence of  replication origin
-Rscript ${OriCorrect} ${tmp_dir}/${OUT}.norm.bin ${ORloc} ${tmp_dir} ${OUT}
+Rscript ${OriCorrect} ${tmp_dir}/${OUT}.norm.bin ${ORloc} ${tmp_dir} ${OUT} ${NORM}
 
 
 ##### Segements
