@@ -44,8 +44,6 @@ for op,value in opts:
         sys.exit()
 
 if TYPE == 'breakdancer':
-    Input = sys.argv[1]
-    Output = sys.argv[2]
     lines = open(Input).readlines()
     result = ''
     for line in lines:
@@ -55,8 +53,6 @@ if TYPE == 'breakdancer':
             result = result + line[1] + '\t' + line[4] + '\t' + line[6] + '\n'
     open(Output,'w').write(result)
 elif TYPE == 'Delly':
-    Input = sys.argv[1]
-    Output = sys.argv[2]
     lines = open(Input).readlines()
     result = ''
     for line in lines:
