@@ -21,6 +21,7 @@ def DellySplit(str):
             index = t.find('=') + 1
             record.append(t[index:])
             break
+    for t in tmp:    
         if t.find('END') >= 0:
             index = t.find('=') + 1
             record.append(t[index:])
@@ -59,9 +60,10 @@ elif TYPE == 'Delly':
         if line[0] != '#':
             line = line.strip('\n')
             line = line.split('\t')
-            S = line[2]
-            tmp = DellySplit(line[7])
-            result = result + S + '\t' + tmp[1] + '\t' + tmp[0] + '\n'
+            if line[6] == 'PASS':
+                S = line[1]
+                tmp = DellySplit(line[7])
+                result = result + S + '\t' + tmp[1] + '\t' + tmp[0] + '\n'
     open(Output,'w').write(result)
 else:
     if len(sys.argv) == 1:
