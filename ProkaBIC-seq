@@ -12,6 +12,8 @@ BICNorm="${SoftwareDir}/src/BICseq2-norm_v0.2.6/BICseq2-norm.pl"
 BICSeg="${SoftwareDir}/src/BICseq2-seg_v0.7.3/BICseq2-seg.pl"
 GenerateConf="${SoftwareDir}/src/GenerateConf.py"
 OriCorrect="${SoftwareDir}/src/OricCorrection.R"
+Genotype="${SoftwareDir}/src/BICseq2-seg_v0.7.3/genotype.pl"
+CNVseg="${SoftwareDir}/src/SVbreaksCluster.r"
 
 #### Usage
 usage(){
@@ -27,7 +29,10 @@ usage(){
     echo -e "      -b  length of bin. (Defaut 1000)"
     echo -e "      -norm method for correction of normalization either Guassian or Possion (Default Guassian)"
     echo -e "      -p  subsample percentage for normalization. (Default 0.5)"
-    echo -e "      -d  the tmp directory. (Default ${SoftwareDir}/tmp)"
+    echo -e "      -SV SV regions file (Default FALSE)"
+    echo -e "      -PT Pvalue cutoff for CNVs detection (Default 0.001)"
+    echo -e "      -RT log 2 copy number ratio cutoff for CNVs detection (Default 0.2)"
+    echo -e "      -d  the directory for output files. (Default ${SoftwareDir}/tmp)"
     echo -e "      -h  display help info."
     echo -e "example: ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_region -m Mappability -l 4"
 exit 1
@@ -48,11 +53,14 @@ ORloc=""
 BAMINPUT=""
 LAMBDA=""
 MAPfile=""
-PROB='0.5'
-NORM='Guassian'
+PROB="0.5"
+NORM="Guassian"
+PT="0.001"
+RT="0.2"
+SV="FALSE"
 
 ### Check the parameters
-while getopts :i:o:s:r:d:b:m:l:norm:p:h FLAG; do
+while getopts :i:o:s:r:d:b:m:l:norm:p:SV:PT:RT:h FLAG; do
   case $FLAG in
     i)  
       BAMINPUT=$OPTARG
@@ -83,6 +91,15 @@ while getopts :i:o:s:r:d:b:m:l:norm:p:h FLAG; do
       ;;
     p)
       PROB=$OPTARG
+      ;;
+    SV)
+      SV=$OPTARG
+      ;;
+    PT)
+      PT=$OPTARG
+      ;;
+    RT)
+      RT=$OPTARG
       ;;
     h)  
       usage
@@ -120,11 +137,12 @@ ${BICNorm} -p ${PROB} -b ${BIN} --tmp ${tmp_dir}/tmp ${tmp_dir}/conf_1 ${tmp_dir
 ## Remove the influence of  replication origin
 Rscript ${OriCorrect} ${tmp_dir}/${OUT}.norm.bin ${ORloc} ${tmp_dir} ${OUT} ${NORM}
 
-
-##### Segements
+## Segements
 ${BICSeg} --lambda ${LAMBDA} --bootstrap --tmp ${tmp_dir}/tmp ${tmp_dir}/conf_2 ${tmp_dir}/${OUT}_RAW_seg.out
 ${BICSeg} --lambda ${LAMBDA} --bootstrap --tmp ${tmp_dir}/tmp ${tmp_dir}/conf_3 ${tmp_dir}/${OUT}_Proka_seg.out
-
 rm ${tmp_dir}/chr*
 rm ${tmp_dir}/conf*
 rm ${tmp_dir}/*.seq
+
+## CNV detection
+Rscript ${CNVseg} ${SV} ${tmp_dir}/${file}_norm.bin_.norm.bin_corrected.norm.bin ${tmp_dir}/${OUT}_Proka_seg.out ${Genotype} ${OUT} ${PT} ${RT}
