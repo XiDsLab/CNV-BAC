@@ -25,7 +25,7 @@ Step 1: Generate mappability file
 
 Step 2: Extract SV regions from Breakdancer or Delly results
 
-/Path/to/CNV-BAC/ExtractSVREgions.py -i BreakDancer.out -o SV.out -s breakdancer
+/Path/to/CNV-BAC/ExtractSVRegions.py -i BreakDancer.out -o SV.out -s breakdancer
 
 Step 3: Filter CNVs
 
