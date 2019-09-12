@@ -2,7 +2,7 @@ import os,sys
 dir = os.getcwd()
 
 ## Main code
-f = open('ProkaBIC-seq')
+f = open('CNV-BAC')
 tmp = ''
 line = f.readline()
 while line:
@@ -11,7 +11,7 @@ while line:
     else:
         tmp = tmp + line
     line = f.readline()
-open('ProkaBIC-seq','w').write(tmp)
+open('CNV-BAC','w').write(tmp)
 
 ## Main code
 f = open('GenerateMappabilityFile.sh')
@@ -35,5 +35,5 @@ CMD = 'rm ' + dir +'/src/*.tar.gz'
 os.system(CMD)
 CMD = 'Rscript ' + dir+'/src/CheckRpackages.r'
 os.system(CMD)
-os.system('chmod 775 ProkaBIC-seq')
+os.system('chmod 775 CNV-BAC')
 os.system('chmod 775 GenerateMappabilityFile.sh')
