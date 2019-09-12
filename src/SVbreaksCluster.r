@@ -53,9 +53,10 @@ SVClusterAndTest <- function(SV.file,norm.file,seg.file,OutDir,Software,Out_prex
         BreakPoints = c()
         for(i in 1 : length(temp)) BreakPoints = c(BreakPoints,median(as.numeric(temp[[i]])))
         BreakPoints = sort(BreakPoints)
+        BreakPoints = BreakPoints[BreakPoints < refL]
         n = length(BreakPoints)
-        BreakPoints = data.frame(chrName=rep('chr',n+1),start=c(1,BreakPoints[1:n])-1,
-            end=c(BreakPoints[1:n],refL))
+        BreakPoints = data.frame(chrName=rep('chr',n+1),start=c(1,BreakPoints),
+            end=c(BreakPoints,refL))
         write.table(BreakPoints,file=paste0(OutDir,'/SVcandidateRegions_',Out_prex,'.txt'),
             quote=F,row.names=F,sep='\t')
     }else{

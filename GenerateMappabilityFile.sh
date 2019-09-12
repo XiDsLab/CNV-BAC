@@ -15,7 +15,7 @@ gem-mappability -T 4 -I ${output}.gem -l ${readLength} -o ${output}
 gem-2-wig -I ${output}.gem -i ${output}.mappability -o ${output}_${readLength}
  
 ### Generate mappability for ProkaBIC-seq
-python ${SoftwareDir}/src/ProkaBICseqMappability.py ${readLength} ${output}
+python ${SoftwareDir}/src/CNV-BACMappability.py ${readLength} ${output}
 
 ### remove temporary files
 rm ${output}.gem
