@@ -2,7 +2,7 @@
 Copy number detection and growth rate calculation for prokaryote.
 
 # Download
-git clone https://github.com/LinjieWu/ProkaBIC-seq.git
+git clone https://github.com/LinjieWu/CNV-BAC.git
 
 # Requirments
 R version >= 2.6
