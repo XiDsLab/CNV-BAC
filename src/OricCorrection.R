@@ -64,11 +64,11 @@ for(c in oriC){
    x = cbind(x,RefL - c + BinLocation)
 }
 x1 = apply(x,1,min)
+x1 = scale(x1)
 x2 = norm.bin$expected
 y = norm.bin$obs
 
 ## fitting
-x = scale(x)
 index = intersect(which(y<quantile(y,0.95)),which(y>quantile(y,0.05)))
 X1 = x1[index]
 X2 = x2[index]
