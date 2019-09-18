@@ -73,8 +73,8 @@ index = intersect(which(y<quantile(y,0.95)),which(y>quantile(y,0.05)))
 X1 = x1[index]
 X2 = x2[index]
 Y = y[index]
-fit = gam(Y~s(X1)+s(X2))
-X = data.frame(X1 = x1, X2 = x2,family=poisson())
+fit = gam(Y~s(X1)+s(X2),family=poisson())
+X = data.frame(X1 = x1, X2 = x2)
 pred = predict(fit,X)
 expected = exp(pred)
 norm.bin$expected = round(expected,2)
