@@ -1,6 +1,6 @@
 #!/bin/bash
 ######################################################################
-####   ProkaBIC-seq: Call copy number variations for prokaryote
+####   CNV-BAC: Call copy number variations for bacteria
 ####   Aurthor: Linjie Wu
 ####   Date: 201904018
 ######################################################################
@@ -27,11 +27,11 @@ usage(){
     echo -e "      -l  penalty for BIC-seq2 (required)"
     echo -e "      -o  prefix of output file (Default ProkaBIC-seq_tmp)."
     echo -e "      -b  length of bin. (Defaut 1000)"
-    echo -e "      -norm method for correction of normalization either Guassian or Possion (Default Guassian)"
+    echo -e "      --norm method for correction of normalization either Guassian or Poisson (Default Guassian)"
+    echo -e "      --SV SV regions file (Default FALSE)"
+    echo -e "      --PT Pvalue cutoff for CNVs detection (Default 0.001)"
+    echo -e "      --RT log 2 copy number ratio cutoff for CNVs detection (Default 0.2)"
     echo -e "      -p  subsample percentage for normalization. (Default 0.5)"
-    echo -e "      -SV SV regions file (Default FALSE)"
-    echo -e "      -PT Pvalue cutoff for CNVs detection (Default 0.001)"
-    echo -e "      -RT log 2 copy number ratio cutoff for CNVs detection (Default 0.2)"
     echo -e "      -d  the directory for output files. (Default ${SoftwareDir}/tmp)"
     echo -e "      -h  display help info."
     echo -e "example: ProkaBIC-seq -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_region -m Mappability -l 4"
@@ -110,12 +110,14 @@ while getopts :i:o:s:r:d:b:m:l:norm:p:SV:PT:RT:h FLAG; do
   esac
 done
 shift $((OPTIND-1))  #This tells getopts to move on to the next argument.
-echo -e "ProkaBIC-seq -i ${BAMINPUT} -o ${OUT} -m ${MAPfile} -s ${ORloc} -r ${REF} -l ${LAMBDA} -b ${BIN} -d ${tmp_dir}"
+echo -e "CNV-BAC -i ${BAMINPUT} -o ${OUT} -m ${MAPfile} -s ${ORloc} -r ${REF} -l ${LAMBDA} -b ${BIN} -d ${tmp_dir}"
 
 ## wrong parmater
-if [ "Guassian" -o 'Poisson' -ne '$NORM' ]
-usage
+if [ $NORM != 'Guassian' ] && [ $NORM != 'Poisson' ] ; then
+echo -e " "
 echo -e "Wrong parmater -norm" 
+echo -e " "
+usage
 exit
 fi
 
