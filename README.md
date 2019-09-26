@@ -23,7 +23,7 @@ Step 1: Generate mappability file
 
 See https://github.com/LinjieWu/GenerateMappability
 
-Step 2: Extract SV regions from Breakdancer or Delly results
+Step 2: Extract SV regions from Breakdancer or Delly results (optional)
 
 /Path/to/CNV-BAC/ExtractSVRegions.py -i BreakDancer.out -o SV.out -s breakdancer
 
