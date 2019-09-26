@@ -21,9 +21,9 @@ ProkaBIC-seq require the origin of replication for reference genome. For the ref
 ## Example for detection of copy number varations
 Step 1: Generate mappability file
 
-/Path/to/CNV-BAC/GenerateMappabilityFile.sh reference.fa 150 example
+See https://github.com/LinjieWu/GenerateMappability
 
-Step 2: Extract SV regions from Breakdancer or Delly results
+Step 2: Extract SV regions from Breakdancer or Delly results (optional)
 
 /Path/to/CNV-BAC/ExtractSVRegions.py -i BreakDancer.out -o SV.out -s breakdancer
 
