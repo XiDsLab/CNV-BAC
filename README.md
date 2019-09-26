@@ -13,7 +13,6 @@ cd /PATH/TO/CNV-BAC
 
 python setup.py
 
-Add the path of CNV-BAC to envrionment.
 
 # Usage
 ProkaBIC-seq require the origin of replication for reference genome. For the references from NCBI database, origin of replications can get from http://tubic.org/doric/public/index.php/index.
@@ -29,7 +28,7 @@ Step 2: Extract SV regions from Breakdancer or Delly results (optional)
 
 Step 3: Filter CNVs
 
-CNV-BAC -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_region -m example_mappability -l 2 -SV SV.out
+python CNV-BAC.py -i input.bam -r reference.fa -s start_of_Oric_region,end_of_Oric_region -m example_mappability -l 2 -SV SV.out
 
 # Output files
 *_mappability: Regions of reference with mappability 1 (calculated by gemtools).
