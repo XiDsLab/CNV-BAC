@@ -1,5 +1,5 @@
 # CNV-BAC
-Copy number detection and growth rate calculation for prokaryote.
+Copy number detection and growth rate calculation for bacteria.
 
 # Download
 git clone https://github.com/LinjieWu/CNV-BAC.git
