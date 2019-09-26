@@ -23,4 +23,4 @@ CMD = 'rm ' + dir +'/src/*.tar.gz'
 os.system(CMD)
 CMD = 'Rscript ' + dir+'/src/CheckRpackages.r'
 os.system(CMD)
-os.system('chmod 775 CNV-BAC')
+os.system('chmod 775 CNV-BAC.py')
