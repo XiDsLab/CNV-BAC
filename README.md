@@ -6,7 +6,10 @@ git clone https://github.com/LinjieWu/CNV-BAC.git
 
 # Requirments
 R version >= 2.6
+
 R package 'mgcv' and 'graph'
+
+Python2
 
 # Set up
 cd /PATH/TO/CNV-BAC
