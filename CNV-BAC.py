@@ -6,7 +6,7 @@
 import os,sys,getopt
 
 #### Set paths
-SoftwareDir=""
+SoftwareDir="/home/ruibinxi_pkuhpc/lustre1/ljwu/software/CNV-BAC"
 
 def usage(SoftwareDir):
     print "Program: CNV-BAC (Call copy number variations for prokaryote.)"
@@ -111,10 +111,10 @@ def main(argv,SoftwareDir):
 
     ## Segment
     os.system(BICSeg+' --lambda '+LAMBDA+' --bootstrap --tmp '+tmp_dir+'/tmp '+tmp_dir+'/conf_3 '+tmp_dir+'/'+OUT+'_seg.out')
-    os.system('rm '+tmp_dir+'/chr*'+' '+tmp_dir+'/conf*'+' '+tmp_dir+'/*.seq')
+    os.system('rm '+tmp_dir+'/conf*'+' '+tmp_dir+'/*.seq')
 
     ## CNV detection
-    os.system('Rscript '+CNVseg+' '+SV+' '+tmp_dir+'/'+OUT+'_norm.bin.norm.bin_corrected.norm.bin '+tmp_dir+'/'+OUT+'_seg.out '+Genotype+' '+OUT+' '+PT+' '+RT)
+    os.system('Rscript '+CNVseg+' '+SV+' '+'/'+OUT+'_norm.bin.norm.bin_corrected.norm.bin '+tmp_dir+'/'+OUT+'_seg.out '+tmp_dir+' '+Genotype+' '+OUT+' '+PT+' '+RT)
 
 if __name__ == "__main__":
    main(sys.argv[1:],SoftwareDir)
