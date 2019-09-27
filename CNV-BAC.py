@@ -3,7 +3,7 @@
 ####   Aurthor: Linjie Wu
 ####   Date: 20190926
 ######################################################################
-import os,sys
+import os,sys,getopt
 
 #### Set paths
 SoftwareDir=""
