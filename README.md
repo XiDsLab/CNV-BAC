@@ -1,5 +1,5 @@
 # CNV-BAC
-Copy number detection and growth rate calculation for bacteria.
+copy number variation detection for bacteria circular DNA high-throughput sequencing data.
 
 # Download
 git clone https://github.com/LinjieWu/CNV-BAC.git
