@@ -37,6 +37,7 @@ def main(argv,SoftwareDir):
     OriCorrect=SoftwareDir + "/src/OricCorrection.R"
     Genotype=SoftwareDir + "/src/BICseq2-seg_v0.7.3/genotype.pl"
     CNVseg=SoftwareDir + "/src/SVbreaksCluster.r"
+    AddMap=SoftwareDir + "/src/AddMappability.r"
     
     # Set default parameters
     OUT="ProkaBIC-seq_tmp"
@@ -115,6 +116,9 @@ def main(argv,SoftwareDir):
 
     ## CNV detection
     os.system('Rscript '+CNVseg+' '+SV+' '+'/'+OUT+'_norm.bin.norm.bin_corrected.norm.bin '+tmp_dir+'/'+OUT+'_seg.out '+tmp_dir+' '+Genotype+' '+OUT+' '+PT+' '+RT)
-
+    
+    ## Add mappability
+    os.system('Rscript '+AddMap+' '+tmp_dir+'/'OUT+'.CNVs '+BIN)
+    
 if __name__ == "__main__":
    main(sys.argv[1:],SoftwareDir)
