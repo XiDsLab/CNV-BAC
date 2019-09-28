@@ -32,11 +32,6 @@ open(dir+'/conf_1','w').write(conf_1)
 
 # For segmentation
 conf_2 = 'romName\tbinFileNorm\n'
-conf_2 = conf_2 + 'chr\t' + dir +'/' + OUT + '.norm.bin\n'
+conf_2 = conf_2 + 'chr\t' + dir +'/' + OUT + '.norm.bin_corrected.norm.bin\n'
 open(dir+'/conf_2','w').write(conf_2)
-
-# For segmentation
-conf_3 = 'romName\tbinFileNorm\n'
-conf_3 = conf_3 + 'chr\t' + dir +'/' + OUT + '.norm.bin_corrected.norm.bin\n'
-open(dir+'/conf_3','w').write(conf_3)
 
