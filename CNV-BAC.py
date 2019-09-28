@@ -110,7 +110,7 @@ def main(argv,SoftwareDir):
     os.system('Rscript '+OriCorrect+' '+tmp_dir+'/'+OUT+'.norm.bin '+ORloc+' '+tmp_dir+' '+OUT+' '+NORM)
 
     ## Segment
-    os.system(BICSeg+' --lambda '+LAMBDA+' --bootstrap --tmp '+tmp_dir+'/tmp '+tmp_dir+'/conf_3 '+tmp_dir+'/'+OUT+'_seg.out')
+    os.system(BICSeg+' --lambda '+LAMBDA+' --bootstrap --tmp '+tmp_dir+'/tmp '+tmp_dir+'/conf_2 '+tmp_dir+'/'+OUT+'_seg.out')
     os.system('rm '+tmp_dir+'/conf*'+' '+tmp_dir+'/*.seq')
 
     ## CNV detection
