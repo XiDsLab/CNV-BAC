@@ -18,7 +18,7 @@ python setup.py
 
 
 # Usage
-Usage: CNV-BAC [options]
+Usage: python CNV-BAC.py [options]
 
       -h  display help info.
       
