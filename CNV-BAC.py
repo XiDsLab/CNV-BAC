@@ -3,10 +3,10 @@
 ####   Aurthor: Linjie Wu
 ####   Date: 20190926
 ######################################################################
-import os,sys
+import os,sys,getopt
 
 #### Set paths
-SoftwareDir=""
+SoftwareDir="/home/ruibinxi_pkuhpc/lustre1/ljwu/software/CNV-BAC"
 
 def usage(SoftwareDir):
     print "Program: CNV-BAC (Call copy number variations for prokaryote.)"
@@ -16,7 +16,7 @@ def usage(SoftwareDir):
     print "      -s  Location of origin of replications seperated by comma (required), one can get this information from DoriC database http://tubic.org/doric/public/index.php/index."
     print "      -r  fasta file of reference file. (required)"
     print "      -m  Mappability file (required)"
-    print "      -l  penalty for BIC-seq2 (required)"
+    print "      -l  penalty for BIC-seq2 (Default 1.5)"
     print "      -o  prefix of output file (Default CNV-BAC_tmp)."
     print "      -b  length of bin. (Defaut 1000)"
     print "      -p  subsample percentage for normalization. (Default 0.5)"
@@ -45,7 +45,7 @@ def main(argv,SoftwareDir):
     REF=""
     ORloc=""
     BAMINPUT=""
-    LAMBDA=""
+    LAMBDA="1.5"
     MAPfile=""
     PROB="0.5"
     NORM="Gaussian"
@@ -91,31 +91,30 @@ def main(argv,SoftwareDir):
             RT=arg
 
     # Check input parameters
-    if REF == "" or Rloc == "" or BAMINPUT == "" or LAMBDA="" or MAPfile="":
+    if REF == "" or ORloc == "" or BAMINPUT == "" or MAPfile=="":
         usage(SoftwareDir)
         print "Please check input parameters"
         sys.exit()
 
     # Normalization
     os.system(Samtools+' view -U BWA,'+tmp_dir+'/chr,N,N '+BAMINPUT)
-    os.system('mv '+tmp_dir'/chr*.seq '+tmp_dir+'/'+OUT+'.seq')
+    os.system('mv '+tmp_dir+'/chr*.seq '+tmp_dir+'/'+OUT+'.seq')
 
     # Generate config files
     os.system('python '+GenerateConf+' '+REF+' '+tmp_dir+' '+OUT+' '+MAPfile)
 
     # Bining
-    os.system(BICNorm+' -p '+PROB' -b '+BIN+' --tmp '+tmp_dir+'/tmp '+tmp_dir+'/conf_1 '+tmp_dir+'/'+OUT+'_norm.out')
-
+    os.system(BICNorm+' -p '+PROB+' -b '+BIN+' --tmp '+tmp_dir+'/tmp '+tmp_dir+'/conf_1 '+tmp_dir+'/'+OUT+'_norm.out')
+     
     ## Replication bias correction
-    os.system('Rscript '+OriCorrect' '+tmp_dir'/'+OUT+'.norm.bin '+ORloc+' '+tmp_dir+' '+OUT+' '+NORM)
+    os.system('Rscript '+OriCorrect+' '+tmp_dir+'/'+OUT+'.norm.bin '+ORloc+' '+tmp_dir+' '+OUT+' '+NORM)
 
     ## Segment
-    os.system(BICSeg+' --lambda '+LAMBDA+' --bootstrap --tmp '+tmp_dir+'/tmp '+tmp_dir+'/conf_3 '+tmp_dir+'/'+OUT+'_seg.out')
-    os.system('rm '+tmp_dir+'/chr*'+' '+tmp_dir+'/conf*'+' '+tmp_dir+'/*.seq'
+    os.system(BICSeg+' --lambda '+LAMBDA+' --bootstrap --tmp '+tmp_dir+'/tmp '+tmp_dir+'/conf_2 '+tmp_dir+'/'+OUT+'_seg.out')
+    os.system('rm '+tmp_dir+'/conf*'+' '+tmp_dir+'/*.seq')
 
     ## CNV detection
-    os.system('Rscript '+CNVseg+' '+SV+' '+tmp_dir+'/'+file+'_norm.bin_.norm.bin_corrected.norm.bin '+tmp_dir+'/'+OUT+'_seg.out '+Genotype+' '+OUT+' '+PT+' '+RT)
-    
+    os.system('Rscript '+CNVseg+' '+SV+' '+'/'+OUT+'_norm.bin.norm.bin_corrected.norm.bin '+tmp_dir+'/'+OUT+'_seg.out '+tmp_dir+' '+Genotype+' '+OUT+' '+PT+' '+RT)
 
 if __name__ == "__main__":
-   main(sys.argv[1:])
+   main(sys.argv[1:],SoftwareDir)

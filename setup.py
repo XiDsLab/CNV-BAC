@@ -2,7 +2,7 @@ import os,sys
 dir = os.getcwd()
 
 ## Main code
-f = open('CNV-BAC')
+f = open('CNV-BAC.py')
 tmp = ''
 line = f.readline()
 while line:
@@ -11,19 +11,7 @@ while line:
     else:
         tmp = tmp + line
     line = f.readline()
-open('CNV-BAC','w').write(tmp)
-
-## Main code
-f = open('GenerateMappabilityFile.sh')
-tmp = ''
-line = f.readline()
-while line:
-    if line.find('SoftwareDir') == 0:
-        tmp = tmp + 'SoftwareDir="' + dir + '"\n'
-    else:
-        tmp = tmp + line
-    line = f.readline()
-open('GenerateMappabilityFile.sh','w').write(tmp)
+open('CNV-BAC.py','w').write(tmp)
 
 CMD = 'tar xf ' + dir +'/src/BICseq2-norm_v0.2.6.tar.gz -C ' + dir + '/src/'
 os.system(CMD)
@@ -35,5 +23,4 @@ CMD = 'rm ' + dir +'/src/*.tar.gz'
 os.system(CMD)
 CMD = 'Rscript ' + dir+'/src/CheckRpackages.r'
 os.system(CMD)
-os.system('chmod 775 CNV-BAC')
-os.system('chmod 775 GenerateMappabilityFile.sh')
+os.system('chmod 775 CNV-BAC.py')

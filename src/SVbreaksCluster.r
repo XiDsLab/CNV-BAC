@@ -22,7 +22,7 @@ FilterBICseqResult <- function(file,mark='Coverage',pThreshold=0.001,ratioThresh
     return(SEG)
 }
 
-SVClusterAndTest <- function(SV.file,norm.file,seg.file,OutDir,Software,Out_prex){
+SVClusterAndTest <- function(SV.file,norm.file,seg.file,OutDir,Software,Out_prex,PT,RT){
     require(graph)
     # preprocessing SV file
     if(file.info(SV.file)$size == 0 || SV.file == 'FALSE'){
@@ -102,6 +102,6 @@ SVClusterAndTest <- function(SV.file,norm.file,seg.file,OutDir,Software,Out_prex
     system(paste('rm',paste0(OutDir,'/SVcandidateRegions_',Out_prex,'.txt')))
     q(save='no')
 }
-SVClusterAndTest(SV.file,norm.file,seg.file,OutDir,Software,Out_prex)
+SVClusterAndTest(SV.file,norm.file,seg.file,OutDir,Software,Out_prex,PT,RT)
 
 
