@@ -19,19 +19,33 @@ python setup.py
 
 # Usage
 Usage: CNV-BAC [options]
+
       -h  display help info.
+      
       -i  bam file generate by BWA. (required)
+      
       -s  Location of origin of replications seperated by comma (required), one can get this information from DoriC database http://tubic.org/doric/public/index.php/index.
+      
       -r  fasta file of reference file. (required)
+      
       -m  Mappability file (required)
+      
       -l  penalty for BIC-seq2 (Default 1.5)
+      
       -o  prefix of output file (Default CNV-BAC_tmp).
+      
       -b  length of bin. (Defaut 1000)
+      
       -p  subsample percentage for normalization. (Default 0.5)
+      
       -d  the directory for output files. (Default /home/ruibinxi_pkuhpc/lustre1/ljwu/software/CNV-BAC/tmp)
+      
       --norm method for correction of normalization either Gaussian or Poisson (Default Gaussian)
+      
       --SV SV regions file (Default FALSE)
+      
       --PT Pvalue cutoff for CNVs detection (Default 0.001)
+      
       --RT log 2 copy number ratio cutoff for CNVs detection (Default 0.2)
 
 ## Example for detection of copy number varations
