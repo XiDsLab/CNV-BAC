@@ -46,7 +46,7 @@ DistCor <- function(norm.bin,oriC){
 }
 
 #### Correction
-GuassianCorr <- function(norm.bin,oriC){
+GaussianCorr <- function(norm.bin,oriC){
 	require(mgcv)
 
 	flag = DistCor(norm.bin,oriC)
@@ -127,10 +127,10 @@ PoissonCorr <- function(norm.bin,oriC){
 	return(norm.bin)
 }
 
-##### Guassian correction
+##### Gaussian correction
 if(Method == 'Gaussian'){
 norm.bin = read.table(file,header = T)
-norm.bin1 = GuassianCorr(norm.bin,oriC)
+norm.bin1 = GaussianCorr(norm.bin,oriC)
 write.table(norm.bin1,file=outfile,quote=F,row.names=F,sep='\t')
 r = DistCor(norm.bin,oriC)
 r = c(r$estimate,r$p.value)
