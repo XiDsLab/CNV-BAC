@@ -1,5 +1,5 @@
 # CNV-BAC
-Copy number variation detection for bacteria circular DNA high-throughput sequencing data.
+Copy Number Variation Detection in Bacterial Circular Genome
 
 # Download
 git clone https://github.com/LinjieWu/CNV-BAC.git
