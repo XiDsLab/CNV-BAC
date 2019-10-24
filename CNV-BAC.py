@@ -118,7 +118,7 @@ def main(argv,SoftwareDir):
     os.system('Rscript '+CNVseg+' '+SV+' '+'/'+OUT+'_norm.bin.norm.bin_corrected.norm.bin '+tmp_dir+'/'+OUT+'_seg.out '+tmp_dir+' '+Genotype+' '+OUT+' '+PT+' '+RT)
     
     ## Add mappability
-    os.system('Rscript '+AddMap+' '+tmp_dir+'/'OUT+'.CNVs '+BIN)
+    os.system('Rscript '+AddMap+' '+tmp_dir+'/'+OUT+'.CNVs '+BIN)
     
 if __name__ == "__main__":
    main(sys.argv[1:],SoftwareDir)
